@@ -44,7 +44,7 @@ public class Hero {
     @CreatedDate
     private LocalDateTime createDate;
 
-    @Column(name = "last_change ")
+    @Column(name = "last_change")
     @LastModifiedDate
     private LocalDateTime lastChange;
 

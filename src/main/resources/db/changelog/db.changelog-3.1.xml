@@ -1,0 +1,83 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.1.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
+    <changeSet author="Kolyan Lock" id="1640899405989-1">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="users"/>
+            </not>
+        </preConditions>
+        <createTable tableName="users">
+            <column autoIncrement="true" name="id" type="INTEGER">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="users_pkey"/>
+            </column>
+            <column name="name" type="VARCHAR(15)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="password" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueBoolean="true" name="enabled" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addUniqueConstraint columnNames="name" constraintName="users_username_key" tableName="users"/>
+    </changeSet>
+    <changeSet author="Kolyan Lock" id="1640899405989-2">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="users"/>
+            <tableIsEmpty tableName="users"/>
+        </preConditions>
+        <insert tableName="users">
+            <column name="name" value="developer"/>
+            <column name="password" value="{bcrypt}$2a$10$PSs7BHzjaazcebwYrrqrYuDrQe.DIEYXXGFzdVuCcjbuSbTd19Vaa"/>
+            <column name="enabled" valueBoolean="true"/>
+        </insert>
+        <insert tableName="users">
+            <column name="name" value="manager"/>
+            <column name="password" value="{bcrypt}$2a$10$EDZyB3hb.CMyDvTYsKlaqunNwSto4fFVnyKHg0H5qQlssrkaDuHbm"/>
+            <column name="enabled" valueBoolean="true"/>
+        </insert>
+    </changeSet>
+    <changeSet author="Kolyan Lock" id="1640899405989-3">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="authorities"/>
+            </not>
+        </preConditions>
+        <createTable tableName="authorities">
+            <column autoIncrement="true" name="id" type="INTEGER">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="authorities_pkey"/>
+            </column>
+            <column name="user_id" type="INTEGER"/>
+            <column name="authority" type="VARCHAR(25)"/>
+        </createTable>
+        <addForeignKeyConstraint baseColumnNames="user_id"
+                baseTableName="authorities"
+                constraintName="authorities_user_id_fkey"
+                deferrable="false"
+                initiallyDeferred="false"
+                onDelete="NO ACTION"
+                onUpdate="NO ACTION"
+                referencedColumnNames="id"
+                referencedTableName="users"
+                validate="true"/>
+    </changeSet>
+    <changeSet author="Kolyan Lock" id="1640899405989-10">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="authorities"/>
+            <tableIsEmpty tableName="authorities"/>
+        </preConditions>
+        <insert tableName="authorities">
+            <column name="user_id" valueNumeric="1"/>
+            <column name="authority" value="ROLE_DEVELOPER"/>
+        </insert>
+        <insert tableName="authorities">
+            <column name="user_id" valueNumeric="2"/>
+            <column name="authority" value="ROLE_MANAGER"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>

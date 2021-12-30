@@ -18,13 +18,14 @@ public class CustomUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         com.kolyanlock.heroesinvacuum.entity.auth.User user = userRepository.findByName(username);
 
-        if (user == null || !user.isEnabled())
+        if (user == null)
             throw new UsernameNotFoundException ("Unknown user: " + username);
 
         return User.builder()
                 .username(user.getName())
                 .password(user.getPassword())
                 .authorities(user.getAuthorities())
+                .disabled(!user.isEnabled())
                 .build();
     }
 }

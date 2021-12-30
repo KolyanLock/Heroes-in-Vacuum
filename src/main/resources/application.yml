@@ -1,0 +1,27 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/heroes01
+    username: postgres
+    password: postgres
+  jpa:
+    show-sql: true
+    hibernate.ddl-auto: none
+
+server:
+  servlet.context-path: /heroes-in-vacuum
+
+  error:
+    include-exception: true
+    include-message: always
+
+spring.data.web.pageable.one-indexed-parameters: true
+
+spring.liquibase.change-log: classpath:db/changelog/db.changelog-master.xml
+
+info:
+  name: Heroes in Vacuum
+  description: "Spring Boot REST API application. \
+  This application used for operations with heroes in vacuum."
+  author: Kolyan Lock
+
+management.endpoints.web.exposure.include: "*"

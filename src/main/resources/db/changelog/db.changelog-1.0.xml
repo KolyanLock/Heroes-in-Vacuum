@@ -1,0 +1,50 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.1.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
+    <changeSet author="Kolyan Lock" id="1638908031350-1" runAlways="true">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="hero_classes"/>
+            </not>
+        </preConditions>
+        <createTable tableName="hero_classes">
+            <column autoIncrement="true" name="id" type="INTEGER">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="hero_classes_pkey"/>
+            </column>
+            <column name="title" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="TEXT"/>
+        </createTable>
+        <addUniqueConstraint columnNames="title" constraintName="hero_classes_title_key" tableName="hero_classes"/>
+    </changeSet>
+    <changeSet author="Kolyan Lock" id="1638908031350-2" runAlways="true">
+        <preConditions onFail="MARK_RAN">
+            <tableIsEmpty tableName="hero_classes"/>
+        </preConditions>
+        <insert tableName="hero_classes">
+            <column name="id" valueNumeric="1"/>
+            <column name="title" value="Mage"/>
+            <column name="description" value="A hero classified as a mage has received the blessing of Dura's sorcery. They are able to utilize spells in various ways to damage and overall hinder their opponents."/>
+        </insert>
+        <insert tableName="hero_classes">
+            <column name="id" valueNumeric="2"/>
+            <column name="title" value="Tank"/>
+            <column name="description" value="A hero classified as a tank has received the blessing of Dura's fortitude. They are better equipped to withstand damage sustained from their opponents, as they are bulkier and defensive. Tank heroes excel on the frontlines where they can protect their teammates by absorbing damage."/>
+        </insert>
+        <insert tableName="hero_classes">
+            <column name="id" valueNumeric="3"/>
+            <column name="title" value="Warrior"/>
+            <column name="description" value="A hero classified as a warrior has received the blessing of Dura's might. Packing more of a punch, they are able to deal higher physical damage to their opponents while having some sustainability."/>
+        </insert>
+        <insert tableName="hero_classes">
+            <column name="id" valueNumeric="4"/>
+            <column name="title" value="Ranger"/>
+            <column name="description" value="A hero classified as a ranger has received the blessing of Dura's celerity. As the name suggests, these heroes attack their opponents from a distance and are usually nimble, making them the perfect assassins. They're moreso specialist damage dealers."/>
+        </insert>
+        <insert tableName="hero_classes">
+            <column name="id" valueNumeric="5"/>
+            <column name="title" value="Support"/>
+            <column name="description" value="A hero classified as support has received the blessing of Dura's sustenance. They are able to nurture their teammates, providing them with health boosts and other stat buffs. Support heroes excel in the backlines where they are better protected, allowing them to continue doling out buffs to their teammates."/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>

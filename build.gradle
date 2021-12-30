@@ -1,0 +1,45 @@
+plugins {
+    id 'org.springframework.boot' version '2.6.1'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'java'
+}
+
+group = 'com.kolyanlock'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+//configurations {
+//    compileOnly {
+//        extendsFrom annotationProcessor
+//    }
+//}
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    mapstructVersion = '1.4.2.Final'
+}
+
+dependencies {
+//    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.liquibase:liquibase-core'
+    runtimeOnly 'org.postgresql:postgresql'
+    compileOnly group: 'org.projectlombok', name: 'lombok'
+    annotationProcessor group: 'org.projectlombok', name: 'lombok'
+    implementation group: 'org.mapstruct', name: 'mapstruct', version: mapstructVersion
+    annotationProcessor group: 'org.mapstruct', name: 'mapstruct-processor', version: mapstructVersion
+    implementation group: 'javax.validation', name: 'validation-api'
+    annotationProcessor 'org.hibernate:hibernate-jpamodelgen'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.security:spring-security-test'
+}
+
+test {
+    useJUnitPlatform()
+}
